@@ -78,5 +78,5 @@ void printMessage(byte* payload, int length) {
 //
 ////////////////////////////////////////////////////////////////////////
 void subscribeToTopics() {
-  mqtt.subscribe("Astrapi Control");
+  mqtt.subscribe("Hexagon Lights Control");
 }

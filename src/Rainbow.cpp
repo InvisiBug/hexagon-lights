@@ -68,17 +68,19 @@ void Rainbow::changeSpeed(int interval) {
     speedChangeLastMillis = speedChangeCurrentMillis;
 
     if (slowDown) {
-      if (getInterval() >= 3)
+      if (getInterval() >= 3) {
         setInterval(getInterval() - 1);
-      else
+      } else {
         slowDown = false;
+      }
     }
 
     else if (!slowDown) {
-      if (getInterval() <= initialInterval)
+      if (getInterval() <= initialInterval) {
         setInterval(getInterval() + 1);
-      else
+      } else {
         slowDown = true;
+      }
     }
   }
 }
