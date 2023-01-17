@@ -10,8 +10,9 @@
 //
 ////////////////////////////////////////////////////////////////////////
 void startWifi() {
+  // wifiManager.autoConnect("Hexagon Lights");
+  WiFi.mode(WIFI_OFF);  // Clears the last wifi credentials
   pinMode(connectionLED, OUTPUT);
-  WiFi.mode(WIFI_OFF);                 // Clears the last wifi credentials
   WiFi.mode(WIFI_STA);                 // Wifi Modes (WIFI_OFF, WIFI_STA, WIFI_AP, WIFI_AP_STA)
   WiFi.begin(wifiSsid, wifiPassword);  // Dont put give the ESP a host name, it screws up the wifi causing disconnects
 }

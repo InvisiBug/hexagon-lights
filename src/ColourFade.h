@@ -36,7 +36,7 @@ class ColourFade {
   int oldGreen;
   int oldBlue;
 
-  int newRed;
+    int newRed;
   int newGreen;
   int newBlue;
 

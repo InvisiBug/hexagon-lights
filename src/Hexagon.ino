@@ -22,7 +22,8 @@
 #include "ColourFade.h"
 #include "Crisscross.h"  // Has some odd flickering
 #include "Fire.h"
-#include "Meteor.h"
+// #include "Meteor.h"
+
 #include "Rainbow.h"
 #include "Test.h"
 #include "Tetris.h"
@@ -39,7 +40,7 @@
 //
 ////////////////////////////////////////////////////////////////////////
 // #define cloudLEDs 0
-#define numPanels 6
+#define numPanels 9
 // #define stripLEDs 13 + 6 * 12
 // #define totalLEDs stripLEDs + cloudLEDs
 #define totalLEDs (numPanels * 12) + 1
@@ -76,7 +77,7 @@ CRGB currentLED[totalLEDs];
 
 Fire fire(totalLEDs, currentLED);
 Test test(totalLEDs, currentLED, 50);
-Meteor meteor(totalLEDs, currentLED, 50);
+// Meteor meteor(totalLEDs, currentLED, 50);
 Crisscross crissCross(totalLEDs, currentLED, 50);
 ColourCycle colourCycle(totalLEDs, currentLED, 50);
 ColourFade colourFade(totalLEDs, currentLED, 50);
@@ -244,7 +245,6 @@ void meteorRain(byte red, byte green, byte blue, byte meteorSize, byte meteorTra
     currentLED[i] = 0x000000;
   }
 
-  // for (int i = 0; i < totalLEDs + totalLEDs; i++) {
   for (int i = 0; i < totalLEDs + totalLEDs; i++) {
     // fade brightness all LEDs one step
     for (int j = 0; j < totalLEDs; j++) {
@@ -264,6 +264,8 @@ void meteorRain(byte red, byte green, byte blue, byte meteorSize, byte meteorTra
     FastLED.show();
     delay(SpeedDelay);
   }
+
+  Serial << "restart" << endl;
 }
 
 void fadeToBlack(int ledNo, byte fadeValue) {
