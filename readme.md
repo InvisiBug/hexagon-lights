@@ -1,4 +1,12 @@
 # Hexagon Lights
+This is the repo for my hexagon lights
+
+These hexagons  are loosley based on the [100 hex project](https://www.thingiverse.com/thing:2477471)
+
+<p align="center">
+<img src="readmePics/pic.png" height="280" />
+</p>
+
 Link to the [Writeup](https://kavanet.io/projects/2d99509f1bcb468c90457e0fe955cf8d)
 
 ### Available modes for the system
