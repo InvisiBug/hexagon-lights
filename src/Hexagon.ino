@@ -98,7 +98,7 @@ TaskHandle_t Task2;
 //     #    #    # #    # # #    # #####  ###### ######  ####
 //
 ////////////////////////////////////////////////////////////////////////
-int LEDBrightness = 25;  // As a percentage (saved as a dynamic variable to let us change later)
+int LEDBrightness = 100;  // As a percentage (saved as a dynamic variable to let us change later)
 
 const char* wifiSsid = "I Don't Mind";
 const char* wifiPassword = "Have2Biscuits";
@@ -189,34 +189,35 @@ void core2Loop(void* pvParameters) {
   for (;;) {
     if (WiFi.status() == WL_CONNECTED) {
       switch (mode) {
-        case 0:  // Off
+        case 0:  //* Off
           FastLED.clear();
           FastLED.show();
           delay(5);
           break;
 
-        case 1:
+        case 1:  //* Fire
           fire.run(55, 120, 20, true);
           break;
 
-        case 2:
+        case 2:  //* Colour Fade
           colourFade.run();
           break;
 
-        case 3:
+        case 3:  //* Colour Cycle
           colourCycle.run();
           break;
 
-        case 4:
+        case 4:  //* Meteor rain
           meteorRain(0xff, 0xff, 0x00, 10, 64, true, 30);
           break;
 
-        case 5:
+        case 5:  //* Rainbow
           rainbow.run();
           // rainbowCycle(20);
           break;
 
         case 6:
+          pecifica
           EVERY_N_MILLISECONDS(20) {
             pacifica_loop();
             FastLED.show();
