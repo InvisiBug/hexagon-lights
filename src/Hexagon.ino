@@ -10,6 +10,7 @@
 //
 ////////////////////////////////////////////////////////////////////////
 // Frameworks
+#include <ArduinoJson.h>  // Json Library
 #include <PubSubClient.h>
 #include <WiFiClient.h>
 
@@ -115,7 +116,11 @@ long connectionTimeout = (2 * 1000);
 long lastWiFiReconnectAttempt = 0;
 long lastMQTTReconnectAttempt = 0;
 
+unsigned long previousMillis = 0;
+
 int testRand = 25;
+
+int red, green, blue;
 
 int mode = 5;
 
@@ -182,6 +187,14 @@ void core1Loop(void* pvParameters) {
     handleMQTT();
     handleWiFi();
     // delay(500); // * Add this back if WDT issues come back
+
+    long interval = (5 * 1000);
+    unsigned long currentMillis = millis();
+    if (currentMillis - previousMillis >= interval) {
+      previousMillis = currentMillis;
+
+      publishAll();
+    }
   }
 }
 
@@ -217,12 +230,15 @@ void core2Loop(void* pvParameters) {
           break;
 
         case 6:
-          pecifica
           EVERY_N_MILLISECONDS(20) {
             pacifica_loop();
             FastLED.show();
             delay(5);
           }
+          break;
+
+        case 9:
+          // Do nothing, used for setting the colour via json
           break;
       }
     }

@@ -50,7 +50,30 @@ void handleMQTT() {
 
 void messageReceived(char* topic, byte* payload, unsigned int length) {
   printMessage(payload, length);
-  mode = (int)payload[0] - 48;  // Stupid ascii I think
+  char state = (char)payload[0];
+
+  if (length > 1)  // Colours
+  {
+    mode = 9;
+    StaticJsonDocument<256> doc;
+    deserializeJson(doc, payload, length);
+
+    red = doc["red"];
+    green = doc["green"];
+    blue = doc["blue"];
+
+    Serial << "Red :" << red << " Green :" << green << " Blue: " << blue << endl;
+
+    for (int i = 0; i < totalLEDs; i++) {
+      currentLED[i].setRGB(red, green, blue);
+    }
+    FastLED.show();
+
+    publishAll();
+  } else {
+    mode = (int)payload[0] - 48;  // Stupid ascii I think
+    publishAll();
+  }
 
   // Serial << mode << endl;
   // Wire.beginTransmission(1);
@@ -79,4 +102,34 @@ void printMessage(byte* payload, int length) {
 ////////////////////////////////////////////////////////////////////////
 void subscribeToTopics() {
   mqtt.subscribe("Hexagon Lights Control");
+}
+
+////////////////////////////////////////////////////////////////////////
+//
+//  ######
+//  #     # #    # #####  #      #  ####  #    #
+//  #     # #    # #    # #      # #      #    #
+//  ######  #    # #####  #      #  ####  ######
+//  #       #    # #    # #      #      # #    #
+//  #       #    # #    # #      # #    # #    #
+//  #        ####  #####  ###### #  ####  #    #
+//
+////////////////////////////////////////////////////////////////////////
+void publishAll() {
+  const size_t capacity = JSON_OBJECT_SIZE(6);
+  DynamicJsonDocument doc(capacity);
+
+  doc["Node"] = nodeName;
+  doc["red"] = red;
+  doc["green"] = green;
+  doc["blue"] = blue;
+  doc["mode"] = mode;
+
+  char buffer[512];
+
+  size_t n = serializeJson(doc, buffer);
+
+  Serial << buffer << endl;
+
+  mqtt.publish(nodeName, buffer, n);
 }
